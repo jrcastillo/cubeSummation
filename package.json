@@ -1,0 +1,23 @@
+{
+  "name": "hackrank-cubesummation",
+  "version": "0.0.0",
+  "description": "Hacker rank challenge",
+  "repository": "git@github.com:jrcastillo/cubeSummation.git",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "keywords": [
+    "challenge",
+    "hacker",
+    "rank"
+  ],
+  "author": "Ramon Castillo",
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^4.17.4"
+  },
+  "devDependencies": {
+    "mocha": "^3.2.0"
+  }
+}
