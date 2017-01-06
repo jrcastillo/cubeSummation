@@ -3,24 +3,24 @@
 const assert = require('assert');
 const casual = require('casual');
 
-const functions = require('./cube-model.js');
+const Cube = require('../../src/model/cube-model.js').Cube;
 
 process.setMaxListeners(0);
 
 describe('Functionality tests for cube processing', function() {
 
-  let cube = [];
+  let cube = new Cube();
   let dimensionLength = 0;
 
   beforeEach('initialize cube and length', function() {
     dimensionLength = casual.integer(2, 50);
-    cube = functions.initializeCube(dimensionLength);
+    cube = cube.initializeCube(dimensionLength);
   });
 
   it('should initialize the cube with the suggested dimension', function(done) {
     let indexToCheck = casual.integer(1,dimensionLength-1);
-    assert.equal(Array.isArray(cube[indexToCheck]), true, 'it is an array');
-    assert.equal(cube[indexToCheck].length, dimensionLength, 'has the specified length');
+    assert.equal(Array.isArray(cube.cells[indexToCheck]), true, 'it is an array');
+    assert.equal(cube.dimension, dimensionLength, 'has the specified length');
     done();
   });
 
@@ -30,9 +30,9 @@ describe('Functionality tests for cube processing', function() {
     let length = casual.integer(1,dimensionLength);
     let value = casual.integer(1,1000);
 
-    cube = functions.updateRow(cube,width,height,length, value);
+    cube = cube.updateRow(width,height,length, value);
 
-    assert.equal(cube[width-1][height-1][length-1], value, 'value has been updated correctly');
+    assert.equal(cube.cells[width-1][height-1][length-1], value, 'value has been updated correctly');
 
     done();
   });
@@ -60,10 +60,10 @@ describe('Functionality tests for cube processing', function() {
       else if(checkArray[0] == widthUpdate && checkArray[1] == heightUpdate && checkArray[2] == lengthUpdate)
         i--;
 
-      cube = functions.updateRow(cube,widthUpdate,heightUpdate,lengthUpdate, value);
+      cube = cube.updateRow(widthUpdate,heightUpdate,lengthUpdate, value);
     }
 
-    let sumResult = functions.queryCube(cube,widthFrom,heightFrom,lengthFrom,widthTo,heightTo,lengthTo);
+    let sumResult = cube.queryCube(widthFrom,heightFrom,lengthFrom,widthTo,heightTo,lengthTo);
 
     assert.equal(sumResult, value*2, 'value has been summed correctly');
 
@@ -98,10 +98,10 @@ describe('Functionality tests for cube processing', function() {
         lengthUpdate = dimensionLength;
       }
 
-      cube = functions.updateRow(cube,widthUpdate,heightUpdate,lengthUpdate, value);
+      cube = cube.updateRow(widthUpdate,heightUpdate,lengthUpdate, value);
     }
 
-    let sumResult = functions.queryCube(cube,widthFrom,heightFrom,lengthFrom,widthTo,heightTo,lengthTo);
+    let sumResult = cube.queryCube(widthFrom,heightFrom,lengthFrom,widthTo,heightTo,lengthTo);
 
     assert.equal(sumResult, value*2, 'value has been summed correctly');
 
