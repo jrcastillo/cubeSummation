@@ -33,9 +33,17 @@ rl.on('line', (line) => {
       switch(command[0]){
         case 'UPDATE':
           functions.updateRow(cube,command[1],command[2],command[3],command[4]);
+          transactionCounter--;
           break;
         case 'QUERY':
-          rl.write(Number(functions.queryCube(cube,command[1],command[2],command[3],command[4],command[5],command[6])));
+          transactionCounter--;
+          console.log(Number(functions.queryCube(cube,command[1],command[2],command[3],command[4],command[5],command[6])));
+          console.log('*******operation********');
+          console.log(operationCounter);
+          console.log('*******transact********');
+          console.log(transactionCounter);
+          console.log('***************');
+          rl.resume();
           break;
         default:
           return 'unknown command'
@@ -47,6 +55,15 @@ rl.on('line', (line) => {
       rl.write('error writing commands, restarting');
       return '';
     }
+
+    if(transactionCounter == 0) {
+      transactionCounter = -1;
+      operationCounter--;
+    }
+
+    if(operationCounter == 0)
+      operationCounter = -1;
+
   } catch(err){
     return err.toString();
   }
