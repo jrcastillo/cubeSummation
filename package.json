@@ -3,9 +3,10 @@
   "version": "0.0.0",
   "description": "Hacker rank challenge",
   "repository": "git@github.com:jrcastillo/cubeSummation.git",
-  "main": "src/index.js",
+  "main": "src/main.js",
   "scripts": {
-    "test": "npm test"
+    "test": "./node_modules/.bin/_mocha specs",
+    "start": "node src/main.js"
   },
   "keywords": [
     "challenge",
@@ -16,6 +17,8 @@
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
+    "assert": "^1.4.1",
+    "casual": "^1.5.8",
     "mocha": "^3.2.0"
   }
 }
