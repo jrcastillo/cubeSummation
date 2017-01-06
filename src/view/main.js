@@ -1,16 +1,11 @@
 "use strict";
 
-const functions = require('./functions.js');
 const readline  = require('readline');
-
+const interfaceController = require('../controller/interface-controller.js');
 let rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
-
-let operationCounter = -1;
-let transactionCounter = -1;
-let cube = [];
 
 console.log('******* Cube Summation Challenge *********');
 console.log('******* Input number of test cases *********');

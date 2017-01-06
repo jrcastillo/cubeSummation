@@ -3,7 +3,7 @@
 const assert = require('assert');
 const casual = require('casual');
 
-const functions = require('../src/functions.js');
+const functions = require('./cube-model.js');
 
 process.setMaxListeners(0);
 

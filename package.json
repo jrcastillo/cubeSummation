@@ -6,7 +6,7 @@
   "main": "src/main.js",
   "scripts": {
     "test": "./node_modules/.bin/_mocha specs",
-    "start": "node src/main.js"
+    "start": "node src/view/main.js"
   },
   "keywords": [
     "challenge",
