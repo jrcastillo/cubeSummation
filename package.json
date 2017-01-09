@@ -5,7 +5,7 @@
   "repository": "git@github.com:jrcastillo/cubeSummation.git",
   "main": "src/main.js",
   "scripts": {
-    "test": "./node_modules/.bin/_mocha specs",
+    "test": "./node_modules/.bin/_mocha specs/*",
     "start": "node src/view/main.js"
   },
   "keywords": [
