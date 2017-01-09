@@ -31,8 +31,6 @@ class Cube {
 
   updateRow(width, height, length, value) {
 
-    if(value < 1 || value > 1001)
-      throw new Error('dimension must be between 1 and 1000');
     if((width < 1  || width > this.dimension) &&
       (height < 1 || height > this.dimension) &&
       (length < 1 || length > this.dimension))
