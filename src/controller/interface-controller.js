@@ -15,6 +15,7 @@ function setOperationsCounter(command){
       && 1 <= Number(command[0]) <= 50) {
         testCase.cube = new Cube();
         testCase.testCaseCounter = Number(command[0]);
+        return testCase;
     } else {
       resetApp();
       console.log('Please insert number of test cases');
@@ -35,11 +36,10 @@ function setTransactionsCounter(command) {
       && 1 <= Number(command[1]) <= 1000) {
         testCase.cube.initializeCube(Number(command[0]));
         testCase.transactionCounter = Number(command[1]);
-        return true;
+        return testCase;
     } else {
       throw new Error('Invalid operation')
     }
-    return false;
   } catch(err) {
     console.log(err.message);
     return false;
@@ -47,6 +47,7 @@ function setTransactionsCounter(command) {
 }
 
 function executeTransaction(command) {
+  let result;
   try {
     if(testCase.transactionCounter === 0 && testCase.testCaseCounter > 0){
       throw new Error('No test case or transactions available');
@@ -54,11 +55,11 @@ function executeTransaction(command) {
       switch(command[0].toUpperCase()){
         case 'UPDATE':
           testCase.transactionCounter--;
-          testCase.cube.updateRow(command[1],command[2],command[3],command[4]);
+          result = testCase.cube.updateRow(command[1],command[2],command[3],command[4]);
           break;
         case 'QUERY':
           testCase.transactionCounter--;
-          testCase.cube.queryCube(command[1],command[2],command[3],command[4],command[5],command[6]);
+          result = testCase.cube.queryCube(command[1],command[2],command[3],command[4],command[5],command[6]);
           break;
         default:
           console.log('unknown command')
@@ -67,6 +68,8 @@ function executeTransaction(command) {
       if(testCase.transactionCounter === 0){
         testCase.testCaseCounter--;
       }
+
+      return result;
     }
   } catch(err) {
     return err;
