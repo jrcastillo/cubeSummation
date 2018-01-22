@@ -17,10 +17,10 @@ function setOperationsCounter(command){
         testCase.testCaseCounter = Number(command[0]);
     } else {
       resetApp();
-      return 'Please insert number of test cases';
+      console.log('Please insert number of test cases');
     }
   } catch(err) {
-    return err;
+    console.log(err);
   }
 }
 
@@ -39,12 +39,14 @@ function setTransactionsCounter(command) {
     } else {
       throw new Error('Invalid operation')
     }
+    return false;
   } catch(err) {
-    return err.message;
+    console.log(err.message);
+    return false;
   }
 }
 
-function excecuteTransaction(command) {
+function executeTransaction(command) {
   try {
     if(testCase.transactionCounter === 0 && testCase.testCaseCounter > 0){
       throw new Error('No test case or transactions available');
@@ -84,6 +86,6 @@ function resetApp() {
 
 module.exports.setOperationsCounter = setOperationsCounter;
 module.exports.setTransactionsCounter = setTransactionsCounter;
-module.exports.excecuteTransaction = excecuteTransaction;
+module.exports.executeTransaction = executeTransaction;
 module.exports.resetApp = resetApp;
 module.exports.checkTestCases = checkTestCases;
