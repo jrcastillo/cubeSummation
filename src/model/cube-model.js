@@ -40,7 +40,6 @@ class Cube {
 
     try{
       this.cells[formatPosition(width)][formatPosition(height)][formatPosition(length)] = Number(value);
-      return this;
     } catch(err) {
       throw err;
     }
@@ -69,7 +68,7 @@ class Cube {
           }
         }
       }
-      return sum;
+      console.log(sum);
     } catch(err) {
       throw err;
     }
