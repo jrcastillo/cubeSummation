@@ -13,6 +13,7 @@ describe('Functionality tests for cube processing', function() {
   let dimensionLength = 0;
 
   beforeEach('initialize cube and length', function() {
+    cube = new Cube();
     dimensionLength = casual.integer(2, 50);
     cube = cube.initializeCube(dimensionLength);
   });
@@ -55,12 +56,13 @@ describe('Functionality tests for cube processing', function() {
       let heightUpdate = casual.integer(heightFrom,heightTo);
       let lengthUpdate = casual.integer(lengthFrom, lengthTo);
 
-      if(checkArray.length == 0)
+      if(checkArray.length === 0)
         checkArray.push(widthUpdate,heightUpdate,lengthUpdate);
-      else if(checkArray[0] == widthUpdate && checkArray[1] == heightUpdate && checkArray[2] == lengthUpdate)
+      else if(checkArray[0] === widthUpdate
+        && checkArray[1] === heightUpdate
+        && checkArray[2] === lengthUpdate)
         i--;
-
-      cube = cube.updateRow(widthUpdate,heightUpdate,lengthUpdate, value);
+        cube = cube.updateRow(widthUpdate,heightUpdate,lengthUpdate, value);
     }
 
     let sumResult = cube.queryCube(widthFrom,heightFrom,lengthFrom,widthTo,heightTo,lengthTo);
@@ -88,11 +90,11 @@ describe('Functionality tests for cube processing', function() {
       let heightUpdate = casual.integer(heightFrom,heightTo);
       let lengthUpdate = casual.integer(lengthFrom, lengthTo);
 
-      if(checkArray.length == 0)
+      if(checkArray.length === 0)
         checkArray.push(widthUpdate,heightUpdate,lengthUpdate);
-      else if(checkArray[0] == widthUpdate && checkArray[1] == heightUpdate && checkArray[2] == lengthUpdate)
+      else if(checkArray[0] === widthUpdate && checkArray[1] === heightUpdate && checkArray[2] === lengthUpdate)
         i--;
-      else if(i == 2) {
+      else if(i === 2) {
         widthUpdate = dimensionLength;
         heightUpdate = dimensionLength;
         lengthUpdate = dimensionLength;

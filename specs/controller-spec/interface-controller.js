@@ -26,44 +26,41 @@ describe('Controller of interface specs', function() {
     }
 
     command = ['UPDATE', width, height, length, value];
-    return controller.excecuteTransaction(command);
+    return controller.executeTransaction(command);
   }
 
-  it('should successfully set the operation counter', (done) => {
+  it('should successfully set the test cases counter', (done) => {
     command = [casual.integer(1,50).toString()];
     let result = controller.setOperationsCounter(command);
-    assert.equal(result, '', 'completed the operation succesfully');
-    assert.equal(controller._specs.operationCounter, command[0], 'operation number defined');
+    assert.equal(result.testCaseCounter, command[0], 'operation number defined');
     done();
   });
 
-  it('should successfully set the transaction counter', (done) => {
+  it('should successfully set the cube dimension', (done) => {
     command = [casual.integer(1,100).toString(), casual.integer(1,1000).toString()];
     controller.setOperationsCounter([casual.integer(1,50).toString()]);
     let result = controller.setTransactionsCounter(command);
-    assert.equal(result, '', 'completed the operation succesfully');
-    assert.equal(controller._specs.cube.dimension, command[0], 'cube dimesion');
+    assert.equal(result.cube.dimension, command[0], 'cube dimension');
     done();
   });
 
-  it('should successfully excecute an update transaction', (done) => {
+  it('should successfully execute an update transaction', (done) => {
     let dimension = casual.integer(1,50);
     let width = casual.integer(1,dimension), height = casual.integer(1,dimension), length = casual.integer(1,dimension), value = casual.integer(-1000000000,1000000);
     let result = createAndUpdateCube(1, dimension, width, height, length, value);
-    assert.equal(result, '', 'completed the operation succesfully');
-    let cellValue = controller._specs.cube.cells;
+    let cellValue = result.cells;
     assert.equal(cellValue[width-1][height-1][length-1], value, 'updated cell value');
     done();
   });
 
-  it('should successfully excecute a query transaction', (done) => {
+  it('should successfully execute a query transaction', (done) => {
     let dimension = casual.integer(1,50);
     let valueOne = casual.integer(-1000000000,1000000);
     let valueTwo = casual.integer(-1000000000,1000000);
     createAndUpdateCube(3,dimension,null,null,null,valueOne);
     createAndUpdateCube(null,dimension,null,null,null,valueTwo);
     command = ['QUERY',1,1,1,dimension,dimension,dimension];
-    let result = controller.excecuteTransaction(command);
+    let result = controller.executeTransaction(command);
     assert.equal(result, valueOne+valueTwo, 'sum of values');
     done();
   });
