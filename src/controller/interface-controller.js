@@ -51,7 +51,7 @@ function executeTransaction(command) {
     if(testCase.transactionCounter === 0 && testCase.testCaseCounter > 0){
       throw new Error('No test case or transactions available');
     } else {
-      switch(command[0]){
+      switch(command[0].toUpperCase()){
         case 'UPDATE':
           testCase.transactionCounter--;
           testCase.cube.updateRow(command[1],command[2],command[3],command[4]);
