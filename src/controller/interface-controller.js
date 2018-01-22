@@ -1,19 +1,20 @@
-"use strict";
+'use strict';
 
 const Cube = require('./../model/cube-model.js').Cube;
 
-let _spec = {
-  operationCounter : -1,
+let testCase = {
+  testCaseCounter: -1,
   transactionCounter : -1,
   cube : new Cube()
 };
 
 function setOperationsCounter(command){
   try{
-    if(_spec.operationCounter < 0 && command.length == 1 && Number(command[0]) >= 1 && Number(command[0]) <= 50) {
-      _spec.cube = new Cube();
-      _spec.operationCounter = Number(command[0]);
-      return '';
+    if(testCase.testCaseCounter < 0
+      && command.length === 1
+      && 1 <= Number(command[0]) <= 50) {
+        testCase.cube = new Cube();
+        testCase.testCaseCounter = Number(command[0]);
     } else {
       resetApp();
       return 'Please insert number of test cases';
@@ -25,12 +26,16 @@ function setOperationsCounter(command){
 
 function setTransactionsCounter(command) {
   try{
-    if(_spec.operationCounter < 0) {
-      throw new Error('Must input operation number')
-    } else if (_spec.transactionCounter < 0 && command.length == 2 && Number(command[0]) && Number(command[1]) >= 1 && Number(command[1]) <= 1000) {
-      _spec.cube.initializeCube(command[0]);
-      _spec.transactionCounter = command[1];
-      return '';
+    if(testCase.testCaseCounter <= 0) {
+      throw new Error('No test case available to set transactions to')
+    } else if (testCase.transactionCounter <= 0
+      && command.length === 2
+      && !isNaN(command[0])
+      && !isNaN(command[1])
+      && 1 <= Number(command[1]) <= 1000) {
+        testCase.cube.initializeCube(Number(command[0]));
+        testCase.transactionCounter = Number(command[1]);
+        return true;
     } else {
       throw new Error('Invalid operation')
     }
@@ -41,23 +46,24 @@ function setTransactionsCounter(command) {
 
 function excecuteTransaction(command) {
   try {
-    if(_spec.operationCounter < 0){
-      throw new Error('must input operation number');
-    } else if(_spec.transactionCounter == 0) {
-      _spec.transactionCounter = -1;
-      _spec.operationCounter--;
-      return '';
+    if(testCase.transactionCounter === 0 && testCase.testCaseCounter > 0){
+      throw new Error('No test case or transactions available');
     } else {
       switch(command[0]){
         case 'UPDATE':
-          _spec.transactionCounter--;
-          _spec.cube.updateRow(command[1],command[2],command[3],command[4]);
-          return '';
+          testCase.transactionCounter--;
+          testCase.cube.updateRow(command[1],command[2],command[3],command[4]);
+          break;
         case 'QUERY':
-          _spec.transactionCounter--;
-          return _spec.cube.queryCube(command[1],command[2],command[3],command[4],command[5],command[6]);
+          testCase.transactionCounter--;
+          testCase.cube.queryCube(command[1],command[2],command[3],command[4],command[5],command[6]);
+          break;
         default:
-          return 'unknown command'
+          console.log('unknown command')
+      }
+
+      if(testCase.transactionCounter === 0){
+        testCase.testCaseCounter--;
       }
     }
   } catch(err) {
@@ -65,15 +71,19 @@ function excecuteTransaction(command) {
   }
 }
 
+function checkTestCases(){
+  return testCase.testCaseCounter > 0 && testCase.transactionCounter <= 0;
+}
+
+
 function resetApp() {
-  _spec.transactionCounter = -1;
-  _spec.operationCounter = -1;
-  _spec.cube = new Cube();
+  testCase.transactionCounter = -1;
+  testCase.operationCounter = -1;
+  testCase.cube = new Cube();
 }
 
 module.exports.setOperationsCounter = setOperationsCounter;
 module.exports.setTransactionsCounter = setTransactionsCounter;
 module.exports.excecuteTransaction = excecuteTransaction;
 module.exports.resetApp = resetApp;
-
-module.exports._specs = _spec;
+module.exports.checkTestCases = checkTestCases;
